@@ -1,37 +1,50 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
-// @todo: Темплейт карточки
+import { closeModal, openModal } from './modal.js';
+
 const cardTemplate = document.querySelector('#card-template').content;
-// @todo: DOM узлы
 const cardsContainer = document.querySelector('.places__list');
-// @todo: Функция создания карточки
+const profileEditButton = document.querySelector('.profile__edit-button');
+const closeButtons = document.querySelectorAll('.popup__close');
+const addCardButton = document.querySelector('.profile__add-button');
+
 function createCard (cardData, deleteCard) {
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = card.querySelector('.card__image');
+  const cardTitle = card.querySelector('.card__title');
 
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
+  cardTitle.textContent = cardData.name;
   card.querySelector('.card__title').textContent = cardData.name;
   card.querySelector('.card__delete-button').addEventListener('click', deleteCard);
 
+  cardImage.addEventListener('click', () => {
+    const popupImage = document.querySelector('.popup__image');
+    const popupCaption = document.querySelector('.popup__caption');
+
+    popupImage.src = cardData.link;
+    popupImage.alt = cardData.name;
+    popupCaption.textContent = cardData.name;
+
+    openModal('.popup_type_image');
+  })
+
   return card;
 };
-// @todo: Функция удаления карточки
+
 function deleteCard (evt) {
   evt.target.closest('.card').remove();
 }
 
-// @todo: Вывести карточки на страницу
 initialCards.forEach(function (card) {
   const newCard = createCard(card, deleteCard);
   cardsContainer.append(newCard);
 });
 
-// const profileEdit = document.getElementById('testbtn');
-// const popupContainer = document.querySelector('popup');
+profileEditButton.addEventListener('click', () => openModal('.popup_type_edit'));
+addCardButton.addEventListener('click', () => openModal('.popup_type_new-card'))
 
-// profileEdit.addEventListener('click', openModal)
-
-// function openModal() {
-//   document.getElementById('popup').style.display = 'flex'
-// }
+closeButtons.forEach(button => {
+  button.addEventListener('click', closeModal)
+})
