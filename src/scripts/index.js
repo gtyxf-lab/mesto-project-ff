@@ -69,3 +69,23 @@ function handleFormSubmit(evt) {
 }
 
 formElement.addEventListener('submit', handleFormSubmit);
+
+const cardForm = document.forms['new-place'];
+const placeName = cardForm.elements['place-name'];
+const placeImg = cardForm.elements.link;
+
+function newCardFormSubmit(evt) {
+  evt.preventDefault();
+
+  const createData = {
+    name: placeName.value,
+    link: placeImg.value
+  };
+
+  const newCard = createCard(createData, deleteCard);
+  cardsContainer.prepend(newCard);
+  cardForm.reset();
+  closeModal(evt)
+}
+
+cardForm.addEventListener('submit', newCardFormSubmit)
