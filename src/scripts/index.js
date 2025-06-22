@@ -15,6 +15,7 @@ function createCard (cardData, deleteCard) {
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = card.querySelector('.card__image');
   const cardTitle = card.querySelector('.card__title');
+  const cardLikeButton = card.querySelector('.card__like-button');
 
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
@@ -31,6 +32,10 @@ function createCard (cardData, deleteCard) {
     popupCaption.textContent = cardData.name;
 
     openModal('.popup_type_image');
+  })
+
+  cardLikeButton.addEventListener('click', (evt) => {
+    evt.target.classList.toggle('card__like-button_is-active');
   })
 
   return card;
