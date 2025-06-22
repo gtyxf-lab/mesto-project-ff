@@ -1,5 +1,6 @@
 import '../pages/index.css';
-import { createCard, deleteCard, initialCards } from './cards.js';
+import { createCard, deleteCard } from './card.js';
+import { initialCards } from './cards.js';
 import { closeModal, openModal } from './modal.js';
 
 const cardTemplate = document.querySelector('#card-template').content;
@@ -7,9 +8,9 @@ const cardsContainer = document.querySelector('.places__list');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const closeButtons = document.querySelectorAll('.popup__close');
 const addCardButton = document.querySelector('.profile__add-button');
-const formElement = document.forms['edit-profile'];
-const nameInput = formElement.elements.name;
-const jobInput = formElement.elements.description;
+const profileFormElement = document.forms['edit-profile'];
+const nameInput = profileFormElement.elements.name;
+const jobInput = profileFormElement.elements.description;
 const cardForm = document.forms['new-place'];
 const placeName = cardForm.elements['place-name'];
 const placeImg = cardForm.elements.link;
@@ -42,7 +43,7 @@ closeButtons.forEach(button => {
   button.addEventListener('click', closeModal);
 });
 
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   const profileName = document.querySelector('.profile__title');
   const profileJob = document.querySelector('.profile__description');
@@ -53,7 +54,7 @@ function handleFormSubmit(evt) {
   closeModal(evt);
 }
 
-formElement.addEventListener('submit', handleFormSubmit);
+profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 
 function newCardFormSubmit(evt) {
   evt.preventDefault();

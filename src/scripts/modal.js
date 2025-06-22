@@ -17,8 +17,6 @@ function closeModalEsc(evt) {
     const openedModal = document.querySelector('.popup_is-opened');
     if (openedModal) {
       openedModal.classList.remove('popup_is-opened');
-      document.removeEventListener('keydown', closeModalEsc);
-      openedModal.removeEventListener('click', closeModalOverlay);
     }
   }
 }
