@@ -27,6 +27,29 @@
   opacity: 0.2;
 }
 
+.popup__button_loading {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.popup__button_loading::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media screen and (max-width: 568px) {
   .popup__button {
     font-size: 14px;
