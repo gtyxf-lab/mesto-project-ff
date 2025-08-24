@@ -2,7 +2,7 @@ import '../pages/index.css';
 import { changeAvatar, getInitialCards, getUserInfo, likeCard, patchProfileEdit, postCreateCard, unlikeCard } from './api.js';
 import { cancelDelete, confirmDelete, createCard, deleteCard } from './card.js';
 import { closeModal, closeModalByEvent, openModal } from './modal.js';
-import { clearValidation, enableValidation, forceValidation } from './validation.js';
+import { clearValidation, enableValidation } from './validation.js';
 
 const cardTemplate = document.querySelector('#card-template').content;
 const cardsContainer = document.querySelector('.places__list');
@@ -86,7 +86,6 @@ profileEditButton.addEventListener('click', () => {
   jobInput.value = profileDesc.textContent;
   openModal('.popup_type_edit');
   clearValidation(profileFormElement, validationConfig);
-  forceValidation(profileFormElement, validationConfig); // добавил эту функцию т.к. с сервера идут данные содержащие запятую и при открытии модалки - кнопка "сохранить" недоступна пока не уберешь запятую, а сообщение о том почему кнопка недоступна не выводится из-за clerValidation
 });
 
 addCardButton.addEventListener('click', () => {

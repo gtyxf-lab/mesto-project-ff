@@ -35,18 +35,6 @@ export function deleteCard(evt, cardId) {
   openModal('.popup_type_confirm');
 }
 
-export function deleteCardImmediately(evt, cardId) {
-  const cardElement = evt.target.closest('.card');
-  
-  removeCardFromServer(cardId)
-    .then(() => {
-      cardElement.remove();
-    })
-    .catch(err => {
-      console.error('Ошибка при удалении карточки:', err);
-    });
-}
-
 export function createCard(cardData, deleteCard, cardTemplate, handleImageClick, userId, likeCallback, unlikeCallback) {
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = card.querySelector('.card__image');

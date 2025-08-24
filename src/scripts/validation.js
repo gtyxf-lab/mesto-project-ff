@@ -78,14 +78,3 @@ export function clearValidation(formElement, config) {
 
   toggleButtonState(inputList, buttonElement, config)
 }
-
-export function forceValidation(formElement, config) {
-  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
-  const buttonElement = formElement.querySelector(config.submitButtonSelector);
-
-  inputList.forEach((inputElement) => {
-    isValid(formElement, inputElement, config);
-  });
-
-  toggleButtonState(inputList, buttonElement, config);
-}
