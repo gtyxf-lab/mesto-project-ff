@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { changeAvatar, getInitialCards, getUserInfo, likeCard, patchProfileEdit, postCreateCard, unlikeCard } from './api.js';
+import { changeAvatar, getInitialCards, getUserInfo, likeCard, patchProfileEdit, postCreateCard, removeCardFromServer, unlikeCard } from './api.js';
 import { cancelDelete, confirmDelete, createCard, deleteCard } from './card.js';
 import { closeModal, closeModalByEvent, openModal } from './modal.js';
 import { clearValidation, enableValidation } from './validation.js';
@@ -42,7 +42,7 @@ Promise.all([getUserInfo(), getInitialCards()])
     profileAvatar.style.backgroundImage = `url('${userInfo.avatar}')`;
 
     cardList.forEach(card => {
-      const newCard = createCard(card, deleteCard, cardTemplate, handleImageClick, currentUserId, likeCard, unlikeCard);
+      const newCard = createCard(card, handleDeleteCard, cardTemplate, handleImageClick, currentUserId, likeCard, unlikeCard);
       cardsContainer.append(newCard);
     });
   })
@@ -62,8 +62,12 @@ function toggleButtonState(button, isLoading, originalText) {
   }
 }
 
-confirmButton.addEventListener('click', confirmDelete);
-confirmCloseButton.addEventListener('click', cancelDelete);
+function handleDeleteCard(evt, cardId) {
+  deleteCard(evt, cardId, openModal);
+}
+
+confirmButton.addEventListener('click', () => confirmDelete(removeCardFromServer, closeModal));
+confirmCloseButton.addEventListener('click', () => cancelDelete(closeModal));
 confirmPopup.addEventListener('click', (evt) => {
   if (evt.target === confirmPopup) {
     cancelDelete();
@@ -170,7 +174,7 @@ function newCardFormSubmit(evt) {
     .then(newCardFromServer => {
       const newCard = createCard(
         newCardFromServer, 
-        deleteCard, 
+        handleDeleteCard, 
         cardTemplate, 
         handleImageClick,
         currentUserId,

@@ -1,10 +1,7 @@
-import { removeCardFromServer } from "./api";
-import { closeModal, openModal } from "./modal";
-
 let cardToDeleteId = null;
 let cardToDeleteElement = null;
 
-export function confirmDelete() {
+export function confirmDelete(removeCardFromServer, closeModal) {
   if (cardToDeleteId && cardToDeleteElement) {
     removeCardFromServer(cardToDeleteId)
       .then(() => {
@@ -16,18 +13,17 @@ export function confirmDelete() {
       })
       .catch(err => {
         console.error('Ошибка при удалении карточки:', err);
-        closeModal();
       });
   }
 }
 
-export function cancelDelete() {
+export function cancelDelete(closeModal) {
   cardToDeleteId = null;
   cardToDeleteElement = null;
   closeModal();
 }
 
-export function deleteCard(evt, cardId) {
+export function deleteCard(evt, cardId, openModal) {
   const cardElement = evt.target.closest('.card');
   
   cardToDeleteId = cardId;

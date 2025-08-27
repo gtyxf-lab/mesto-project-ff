@@ -6,30 +6,32 @@ const config = {
   }
 }
 
+function handleResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
+}
+
+function handleError(err) {
+  console.error(`Ошибка запроса: ${err}`);
+  throw err;
+}
+
 export function getUserInfo() {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(handleResponse)
+    .catch(handleError); 
 }
 
 export function getInitialCards() {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function patchProfileEdit(newName, newDesc) {
@@ -41,16 +43,8 @@ export function patchProfileEdit(newName, newDesc) {
       about: newDesc
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.error(err)
-    })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function postCreateCard(cardTitle, cardLink) {
@@ -62,16 +56,8 @@ export function postCreateCard(cardTitle, cardLink) {
       link: cardLink
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.error(err)
-    })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function removeCardFromServer(cardId) {
@@ -79,12 +65,8 @@ export function removeCardFromServer(cardId) {
     method: 'DELETE',
     headers: config.headers
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function likeCard(cardId) {
@@ -92,12 +74,8 @@ export function likeCard(cardId) {
     method: 'PUT',
     headers: config.headers
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function unlikeCard(cardId) {
@@ -105,12 +83,8 @@ export function unlikeCard(cardId) {
     method: 'DELETE',
     headers: config.headers
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function changeAvatar(newAvatarLink) {
@@ -121,13 +95,6 @@ export function changeAvatar(newAvatarLink) {
       avatar: newAvatarLink
     })
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .catch(err => {
-    console.error(err)
-  });
+    .then(handleResponse)
+    .catch(handleError);
 }
